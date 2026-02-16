@@ -1,2 +1,10 @@
 __pycache__/
 2-el-1730-machine-learning-project-2026/
+env/
+catboost_info/
+.DS_store
+X_test.csv
+X_train.csv
+Y_train.csv
+train.geojson
+test.geojson
