@@ -9,7 +9,6 @@ from sklearn.impute import SimpleImputer
 from feature_engineer import engineer_features
 
 ## Chargement des données
-print("Chargement...")
 train_df_raw = engineer_features(gpd.read_file('train.geojson'))
 test_df_raw = engineer_features(gpd.read_file('test.geojson'), train=False)
 
@@ -24,8 +23,6 @@ for col in set(test_X.columns) - set(train_X.columns):
     train_X[col] = 0
 test_X = test_X[train_X.columns]
 
-## Preprocessing
-print("Preprocessing...")
 # Imputation
 imputer = SimpleImputer(strategy='median')
 train_X = pd.DataFrame(imputer.fit_transform(train_X), columns=train_X.columns)
@@ -37,7 +34,6 @@ train_X = pd.DataFrame(scaler.fit_transform(train_X), columns=train_X.columns)
 test_X = pd.DataFrame(scaler.transform(test_X), columns=test_X.columns)
 
 ## Modèle avec class_weight balanced
-print("\nEntraînement Random Forest...")
 rf = RandomForestClassifier(
     n_estimators=500,
     max_depth=40,
@@ -48,7 +44,6 @@ rf = RandomForestClassifier(
 )
 
 ## Cross-validation
-print("\nCross-validation 5-fold...")
 cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
 f1_scorer = make_scorer(f1_score, average='macro')
 scores = cross_val_score(rf, train_X, train_y, cv=cv, scoring=f1_scorer, n_jobs=-1)

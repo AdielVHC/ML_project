@@ -159,7 +159,6 @@ def engineer_features(gdf, train=True):
         status_dummies = pd.get_dummies(status_values, prefix=f'status_{sorted_pos}')
         df = pd.concat([df, status_dummies], axis=1)
     
-    # ✅ CORRECTION : Evolution du statut ligne par ligne
     status_changes_list = []
     for row_idx in range(len(gdf)):
         count = 0
